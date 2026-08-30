@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background: #f7f9fc;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+button {
+    font-family: inherit;
+    border: 0;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Splash */
+#splashScreen {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#logo {
+    width: min(60vw, 320px);
+    max-height: 60vh;
+    object-fit: contain;
+}
+
+.logo-container {
+    animation: fadeInLogo 1.2s ease;
+}
+
+@keyframes fadeInLogo {
+    from { opacity: 0; transform: scale(.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Game */
+#gameContainer {
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #fff6d8, #e8f5ff, #f7fff0);
+}
+
+header {
+    flex: 0 0 auto;
+    padding: 7px;
+    text-align: center;
+}
+
+header h1 {
+    color: #3a4a66;
+    font-size: clamp(1.1rem, 2.2vw, 2rem);
+    margin-bottom: 5px;
+}
+
+#instructions {
+    background: rgba(255,255,255,.92);
+    border: 2px solid #cfe7ff;
+    border-radius: 15px;
+    padding: 5px 9px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+#instructions p {
+    font-size: clamp(.68rem, 1vw, .95rem);
+    margin: 2px 0;
+    color: #333;
+}
+
+#topBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+#topBar button,
+#playAgainBtn {
+    background: #ffd86b;
+    color: #333;
+    border-radius: 12px;
+    padding: 8px 13px;
+    font-size: .9rem;
+    font-weight: bold;
+}
+
+#scoreBox {
+    background: #dff8d6;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #2d5c2f;
+    border: 2px solid #a5d89d;
+}
+
+/* Main */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Monsters */
+#monsterArea {
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+    padding: 7px;
+}
+
+.monster {
+    width: 45%;
+    height: 100%;
+    max-height: 330px;
+    background: rgba(255,255,255,.88);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    border: 4px solid;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.monster:active {
+    transform: scale(.96);
+}
+
+#bookMonster {
+    border-color: #8fd0ff;
+}
+
+#moonMonster {
+    border-color: #d8b8ff;
+}
+
+.monster img {
+    width: 75%;
+    max-height: 180px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.monsterTitle {
+    color: #30465f;
+    font-size: clamp(.85rem, 1.5vw, 1.4rem);
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.monsterText {
+    color: #666;
+    font-size: clamp(.65rem, 1vw, .95rem);
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Word card */
+#cardSection {
+    height: 165px;
+    flex: 0 0 165px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+#wordCard {
+    position: relative;
+    width: min(190px, 42vw);
+    height: 145px;
+    background: #fff;
+    border-radius: 23px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.14);
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+}
+
+#wordCard:active {
+    transform: scale(.96);
+}
+
+#cardImage {
+    width: 100%;
+    height: 82px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+#cardWord {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #30465f;
+    pointer-events: none;
+}
+
+#tapHint {
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    right: 7px;
+    font-size: .62rem;
+    color: #777;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+#speakerButton {
+    position: absolute;
+    right: 7px;
+    top: 5px;
+    font-size: 1.1rem;
+    pointer-events: none;
+}
+
+.new-card {
+    animation: slideUp .45s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(80px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Feedback */
+#feedbackLayer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+.feedback {
+    text-align: center;
+}
+
+.big-icon {
+    font-size: 4.5rem;
+}
+
+.feedback-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.claps {
+    font-size: 1.8rem;
+}
+
+#correctFeedback {
+    color: #27a327;
+}
+
+#wrongFeedback {
+    color: #d32f2f;
+}
+
+.bounce {
+    animation: bounceMonster .5s ease;
+}
+
+@keyframes bounceMonster {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* End */
+#endScreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,.96);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.end-card {
+    width: min(90%, 600px);
+    background: #fff;
+    border-radius: 28px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.end-card h1 {
+    color: #3f6c3f;
+}
+
+.end-card h2 {
+    margin-top: 10px;
+    color: #555;
+}
+
+#finalScore {
+    font-size: 1.8rem;
+    margin-top: 18px;
+    font-weight: bold;
+}
+
+#starContainer {
+    font-size: 2.1rem;
+    margin: 18px 0;
+}
+
+/* Loading */
+#loadingScreen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    z-index: 10000;
+}
+
+.loading-box {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    header {
+        padding: 4px;
+    }
+
+    header h1 {
+        font-size: 1rem;
+    }
+
+    #instructions {
+        padding: 4px 6px;
+    }
+
+    #instructions p {
+        font-size: .66rem;
+    }
+
+    #topBar {
+        gap: 4px;
+        margin-top: 4px;
+    }
+
+    #topBar button,
+    #playAgainBtn {
+        font-size: .72rem;
+        padding: 7px 9px;
+    }
+
+    #scoreBox {
+        font-size: .78rem;
+        padding: 7px 9px;
+    }
+
+    #monsterArea {
+        gap: 6px;
+        padding: 4px;
+    }
+
+    .monster {
+        width: 48%;
+        border-radius: 17px;
+        border-width: 3px;
+    }
+
+    .monster img {
+        width: 82%;
+        max-height: 125px;
+    }
+
+    .monsterTitle {
+        font-size: .78rem;
+    }
+
+    .monsterText {
+        font-size: .62rem;
+    }
+
+    #cardSection {
+        height: 140px;
+        flex-basis: 140px;
+    }
+
+    #wordCard {
+        width: 145px;
+        height: 125px;
+    }
+
+    #cardImage {
+        height: 68px;
+    }
+
+    #cardWord {
+        font-size: 1rem;
+    }
+
+    #tapHint {
+        font-size: .55rem;
+    }
+
+    .big-icon {
+        font-size: 3.7rem;
+    }
+
+    .feedback-text {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 400px) {
+    #instructions p:nth-child(n+3) {
+        display: none;
+    }
+
+    #cardSection {
+        height: 125px;
+        flex-basis: 125px;
+    }
+
+    #wordCard {
+        width: 130px;
+        height: 112px;
+    }
+
+    #cardImage {
+        height: 58px;
+    }
+
+    .monster img {
+        max-height: 105px;
+    }
+}
